@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
-    <footer className="footer sm:footer-horizontal bg-[#0F0F0F] items-center p-4 shadow-md absolute bottom-0">
+    <footer className="footer sm:footer-horizontal bg-[#0F0F0F] items-center p-4 shadow-md sticky bottom-0 z-10">
       <aside className="grid-flow-col items-center">
         <svg
           width="36"

@@ -4,3 +4,13 @@
 body {
   font-family: cursive, source-code-pro, Menlo, Monaco, Consolas;
 }
+
+.price-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.my-custom-checkbox:checked {
+  background-color: #d4af37;
+  border-color: #d4af37;
+}

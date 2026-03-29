@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Body from "./Body";
 import AdminLogin from "./components/AdminLogin";
-import AdminDashboard from "./components/AdminDashboard";
+import Menu from "./components/Menu";
+import ViewFoodItem from "./components/ViewFoodItem";
+import AdminAddDish from "./components/AdminAddDish";
 
 function App() {
   return (
@@ -9,7 +11,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Body />}>
           <Route path="/admin/auth" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/restaurant/menu" element={<Menu />} />
+          <Route
+            path="/restaurant/menu/:foodItemId"
+            element={<ViewFoodItem />}
+          />
+          <Route path="/admin/add-dish" element={<AdminAddDish />} />
         </Route>
       </Routes>
     </BrowserRouter>

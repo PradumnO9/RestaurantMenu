@@ -4,13 +4,23 @@ import type { AdminData } from "../utils/interface";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 
-const AdminLogin = () => {
+const AdminLogin: React.FC = () => {
   const [data, setData] = useState<AdminData>({
     email: "",
     password: "",
   });
   const [eyeToggle, setEyeToggle] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // const dummy_user = {
+  //   email: "pradumn2999@gmail.com",
+  //   password: "Pradumn123@",
+  //   _id: "101",
+  //   type: "admin",
+  //   auth_token:
+  //     "LR3SVJSY89kPzWbcAeLEIIyHtydKTHc7IB5PcDytubxBXttRk99hJM4Jkab7wZQs",
+  //   message: "Welcome Pradumn",
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,8 +40,20 @@ const AdminLogin = () => {
       return;
     }
 
+    // if (
+    //   data.email === dummy_user.email &&
+    //   data.password === dummy_user.password
+    // ) {
+    //   if (dummy_user.type === "admin") {
+    //     localStorage.setItem("auth_token", dummy_user.auth_token);
+    //     localStorage.setItem("type", dummy_user.type);
+    //     alert(dummy_user.message);
+    //     return navigate("/restaurant/menu");
+    //   }
+    // }
+
+    return navigate("/restaurant/menu");
     console.log(data);
-    return navigate("/admin/dashboard");
   };
   return (
     <div className="flex justify-center my-40 md:my-20">
