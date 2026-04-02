@@ -1,17 +1,21 @@
-from sqlmodel import Field
+from sqlmodel import Field, JSON, Column, Relationship 
 from typing import Optional, List
-from .sqllmodel import SQLModel
+from .sqllmodel import SQLModel 
 
-
-class Food(SQLModel,table=True):
-    FoodId : Optional[int] = Field(default= None, primary_key=True)  
+class Food(SQLModel,table=True): 
+    FoodId : Optional[int] = Field(default= None, primary_key=True)
     FoodName : str = Field(default = '')
     FoodRegionalType_FId : Optional[int] = Field(default = None, foreign_key= 'foodregionaltype.FoodRegionalTypeId')
+    # foodregionaltype: Optional[FoodRegionalType] = Relationship(back_populates = 'FoodRegionalType' )
     FoodAllergenComment : str = Field( default = 'Not Containing Allergens')
     FoodAlert : str = Field(default = 'No Alert')
     IsAvailable : bool  = Field( default=False )
-    Price_FId : Optional[int] = Field(default=None , foreign_key='price.PriceId')
-
+    # Price_FId : Optional[int] = Field(default=None , foreign_key='price.PriceId')
+    is_customizable: bool = Field(default = False)
+    FoodPricing  : JSON = Field(default = {}, sa_column =Column(JSON))
+    FoodImage_FId : Optional[int] = Field(default = None , foreign_key = 'foodimage.FoodImageId')
+    class Config:
+        arbitrary_types_allowed=True 
 
 
 

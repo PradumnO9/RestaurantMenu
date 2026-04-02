@@ -5,4 +5,5 @@ from .sqllmodel import SQLModel
 class FoodRegionalType(SQLModel,table=True):
     FoodRegionalTypeId : Optional[int] =  Field( primary_key=True)  
     FoodRegionalTypeName :str = Field( default='')
+    Foods: List["Food"]= Relationship(back_populates = "Food")  
 
