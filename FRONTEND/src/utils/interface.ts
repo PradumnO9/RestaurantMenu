@@ -23,3 +23,13 @@ export interface FoodItem {
     customizable: boolean,
     price: string[]
 }
+
+export interface EditFoodItem {
+    id: string,
+    newName: string,
+    newDescription: string,
+    newCategoryName: string,
+    newImgUrl: string,
+    newCustomizable: boolean,
+    newPrice: string[]
+}

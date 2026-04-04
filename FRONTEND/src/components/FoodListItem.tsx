@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { FoodItem } from "../utils/interface";
-import AddItemPopUp from "./AddItemPopUp";
+import PopUp from "./PopUps/PopUp";
 import { Link } from "react-router-dom";
 interface IPROPS {
   itemData: FoodItem;
@@ -52,7 +52,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
           </div>
         </li>
       </ul>
-      <AddItemPopUp isOpen={isPopUpOpen} onClose={closePopUp}>
+      <PopUp isOpen={isPopUpOpen} onClose={closePopUp}>
         <div className="bg-[#1A1A1A] rouned-xl px-20 py-10 flex flex-col gap-5 items-center mx-3">
           <ul>
             <li className="flex flex-col gap-2">
@@ -77,7 +77,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
             Add Item
           </button>
         </div>
-      </AddItemPopUp>
+      </PopUp>
     </div>
   );
 };

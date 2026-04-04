@@ -1,12 +1,8 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
-import type { AddItemPopUpProps } from "../utils/interface";
+import type { AddItemPopUpProps } from "../../utils/interface";
 
-const AddItemPopUp: React.FC<AddItemPopUpProps> = ({
-  isOpen,
-  onClose,
-  children,
-}) => {
+const PopUp: React.FC<AddItemPopUpProps> = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -24,6 +20,7 @@ const AddItemPopUp: React.FC<AddItemPopUpProps> = ({
         <button onClick={onClose}>
           <MdClose
             size={24}
+            color="#D4AF37"
             className="relative ml-auto top-2 right-2 cursor-pointer"
           />
         </button>
@@ -33,4 +30,4 @@ const AddItemPopUp: React.FC<AddItemPopUpProps> = ({
   );
 };
 
-export default AddItemPopUp;
+export default PopUp;

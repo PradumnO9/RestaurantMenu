@@ -24,7 +24,6 @@ const AdminAddDish = () => {
       setPreview("");
       return;
     }
-    console.log("Selected file:", e, file);
     setSelectedFile(file);
     if (file) {
       setDishData({ ...dishData, imgUrl: URL.createObjectURL(file) });
