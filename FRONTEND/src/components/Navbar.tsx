@@ -22,14 +22,36 @@ const Navbar: React.FC = () => {
               </span>
             </li>
           )}
-          <li className="text-[#D4AF37] text-lg">
+          <li className="text-[#D4AF37] text-lg sm:block hidden">
             <Link to={"/restaurant/menu"}>Menu</Link>
           </li>
-          <li className="text-[#D4AF37] text-lg">
+          <li className="text-[#D4AF37] text-lg sm:block hidden">
             <Link to={"/admin/add-dish"}>Add Dish</Link>
           </li>
-          <li className="text-[#D4AF37] text-lg">
+          <li className="text-[#D4AF37] text-lg sm:block hidden">
+            <Link to={"/admin/add-category"}>Add Category</Link>
+          </li>
+          <li className="text-[#D4AF37] text-lg sm:block hidden">
             <Link to={"/admin/auth"}>Login</Link>
+          </li>
+          <li className="md:hidden">
+            <details>
+              <summary className="text-[#D4AF37] text-lg">Click Here</summary>
+              <ul className="rounded-t-none p-2">
+                <li className="text-[#D4AF37] text-lg">
+                  <Link to={"/restaurant/menu"}>Menu</Link>
+                </li>
+                <li className="text-[#D4AF37] text-lg">
+                  <Link to={"/admin/add-dish"}>Add Dish</Link>
+                </li>
+                <li className="text-[#D4AF37] text-lg">
+                  <Link to={"/admin/add-category"}>Add Category</Link>
+                </li>
+                <li className="text-[#D4AF37] text-lg">
+                  <Link to={"/admin/auth"}>Login</Link>
+                </li>
+              </ul>
+            </details>
           </li>
         </ul>
       </div>
@@ -38,17 +60,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-// <li>
-//   <details>
-//     <summary>Parent</summary>
-//     <ul className="rounded-t-none p-2">
-//       <li>
-//         <Link to={"/"}>Link 1</Link>
-//       </li>
-//       <li>
-//         <Link to={"/"}>Link 2</Link>
-//       </li>
-//     </ul>
-//   </details>
-// </li>

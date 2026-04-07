@@ -1,10 +1,9 @@
 import { useParams, Link } from "react-router-dom";
-import { foodItems } from "../utils/constant";
+import { foodItems, foodCategory } from "../utils/constant";
 import type { EditFoodItem, FoodItem } from "../utils/interface";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import { MdOutlineDone } from "react-icons/md";
 import PopUp from "./PopUps/PopUp";
 
 const ViewFoodItem = () => {
@@ -20,7 +19,7 @@ const ViewFoodItem = () => {
     newCategoryName: foodItem?.categoryName || "",
     newImgUrl: foodItem?.imgUrl || "",
     newCustomizable: foodItem?.customizable || false,
-    newPrice: foodItem?.price ? [...foodItem.price] : [],
+    newPrice: foodItem?.price || {},
   });
 
   const [showNameInput, setShowNameInput] = useState(false);
@@ -32,8 +31,9 @@ const ViewFoodItem = () => {
 
   const [selectImageFile, setSelectImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [newEditedPrice, setNewEditedPrice] = useState<string[]>([]);
-  const [pricePreview, setPricePreview] = useState<string>("");
+  const [pricePreview, setPricePreview] = useState<{ [key: string]: number }>(
+    {},
+  );
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
 
   const openPopUp = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,9 +73,11 @@ const ViewFoodItem = () => {
 
   const handleAddPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (pricePreview.trim() === "") return;
-    setNewEditedPrice((prevPrices) => [...prevPrices, pricePreview]);
-    setPricePreview("");
+    setEditDishData({
+      ...editDishData,
+      newPrice: { ...editDishData.newPrice, ...pricePreview },
+    });
+    setPricePreview({});
   };
 
   const handleRemovePrice = (
@@ -83,17 +85,10 @@ const ViewFoodItem = () => {
     index: number,
   ) => {
     e.preventDefault();
-    const updatedPrices =
-      newEditedPrice.length > 0
-        ? newEditedPrice.filter((_, i) => i !== index)
-        : [];
-    setNewEditedPrice(updatedPrices);
-  };
-
-  const handleDoneTick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setEditDishData({ ...editDishData, newPrice: newEditedPrice });
-    setShowPriceInput(false);
+    const updatedPrices = { ...editDishData.newPrice };
+    const keyToRemove = Object.keys(editDishData.newPrice)[index];
+    delete updatedPrices[keyToRemove];
+    setEditDishData({ ...editDishData, newPrice: updatedPrices });
   };
 
   const handleUpdateDish = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -176,7 +171,9 @@ const ViewFoodItem = () => {
             </div>
             <div>
               <div className="flex items-center">
-                <h2 className="card-subtitle">{foodItem.categoryName}</h2>
+                <h2 className="card-subtitle">
+                  <strong>Category:</strong> {foodItem.categoryName}
+                </h2>
                 <FaEdit
                   size={13}
                   color="#D4AF37"
@@ -187,18 +184,21 @@ const ViewFoodItem = () => {
                 />
               </div>
               {showCategoryInput && (
-                <input
-                  type="text"
+                <select
                   value={editDishData.newCategoryName}
-                  placeholder="Enter new category"
-                  onChange={(e) =>
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                     setEditDishData({
                       ...editDishData,
                       newCategoryName: e.target.value,
-                    })
-                  }
-                  className="input input-bordered w-full max-w-xs mt-1"
-                />
+                    });
+                  }}
+                  className="select mt-2 w-full max-w-xs"
+                >
+                  <option disabled={true}>Choose dish category</option>
+                  {foodCategory.map((category) => (
+                    <option key={category.id}>{category.categoryName}</option>
+                  ))}
+                </select>
               )}
             </div>
             <div>
@@ -229,43 +229,56 @@ const ViewFoodItem = () => {
             </div>
             <div>
               <p className="flex">
-                <strong>Price:</strong> {foodItem.price.join(", ")}
+                <strong>Price:</strong>
                 <FaEdit
                   size={13}
                   color="#D4AF37"
-                  className="ml-1 -mt-2 cursor-pointer hover:text-[#C0A020]"
+                  className="ml-1 -mt-1 cursor-pointer hover:text-[#C0A020]"
                   onClick={() => {
                     setShowPriceInput(!showPriceInput);
                   }}
                 />
               </p>
-              {newEditedPrice.length > 0 && (
-                <div className="flex items-center">
-                  <p>
-                    <strong>New Prices:</strong> {newEditedPrice.join(", ")}
-                  </p>
-                  <button onClick={handleDoneTick}>
-                    <MdOutlineDone
-                      color="#D4AF37"
-                      className="cursor-pointer mr-2"
-                      size={25}
-                    />
-                  </button>
-                </div>
+              {Object.entries(editDishData.newPrice || {}).map(
+                ([size, value]) => (
+                  <span key={size} className="mr-2">
+                    {size.charAt(0).toUpperCase() + size.slice(1)}: ₹{value}{" "}
+                    <br />
+                  </span>
+                ),
               )}
               {showPriceInput && (
                 <div>
                   <div className="grid grid-cols-4 w-[96%] mt-1">
-                    <input
-                      type="text"
-                      className="input input-bordered w-full max-w-xs col-span-3 price-input"
-                      name="pricePreview"
-                      placeholder="eg. full 250"
-                      value={pricePreview}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPricePreview(e.target.value)
-                      }
-                    />
+                    <div className="grid grid-cols-6 col-span-3">
+                      <input
+                        type="text"
+                        className="input input-bordered w-full max-w-xs col-span-3 price-input"
+                        name="pricePreview"
+                        value={Object.keys(pricePreview)[0] || ""}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setPricePreview({
+                            [e.target.value.toLowerCase()]:
+                              Object.values(pricePreview)[0] || 0,
+                          })
+                        }
+                        placeholder="eg. full"
+                      />
+                      <input
+                        type="text"
+                        className="input input-bordered w-full max-w-xs col-span-3 price-input-noradius"
+                        name="pricePreview"
+                        value={Object.values(pricePreview)[0] || ""}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                          setPricePreview({
+                            [Object.keys(pricePreview)[0] || ""]: Number(
+                              e.target.value,
+                            ),
+                          })
+                        }
+                        placeholder="eg. 250"
+                      />
+                    </div>
                     <button
                       onClick={handleAddPrice}
                       className="bg-[#D4AF37] hover:bg-[#E6C65C] cursor-pointer rounded-r-md col-span-1"
@@ -274,22 +287,28 @@ const ViewFoodItem = () => {
                     </button>
                   </div>
                   <ul>
-                    {newEditedPrice.map((data, index) => (
-                      <li
-                        key={index}
-                        className="text-[#F5F5F5] p-2 rounded-md bg-base-100 grid grid-cols-4 w-[96%] my-2"
-                      >
-                        <span className="col-span-3">{data}</span>
-                        <button
-                          className="ml-auto mr-2 cursor-pointer"
-                          onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                            handleRemovePrice(e, index)
-                          }
-                        >
-                          <MdClose size={23} color="#D4AF37" />
-                        </button>
-                      </li>
-                    ))}
+                    {editDishData.newPrice &&
+                      Object.entries(editDishData.newPrice).map(
+                        ([key, value], index) => (
+                          <li
+                            key={index}
+                            className="text-[#F5F5F5] p-2 rounded-md bg-base-100 grid grid-cols-4 w-[96%] my-2"
+                          >
+                            <span className="col-span-3">
+                              {key.charAt(0).toUpperCase() + key.slice(1)}: ₹
+                              {value}
+                            </span>
+                            <button
+                              className="ml-auto mr-2 cursor-pointer"
+                              onClick={(
+                                e: React.MouseEvent<HTMLButtonElement>,
+                              ) => handleRemovePrice(e, index)}
+                            >
+                              <MdClose size={23} color="#D4AF37" />
+                            </button>
+                          </li>
+                        ),
+                      )}
                   </ul>
                 </div>
               )}

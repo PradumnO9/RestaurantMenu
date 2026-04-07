@@ -21,7 +21,7 @@ export interface FoodItem {
     categoryName: string,
     imgUrl: string,
     customizable: boolean,
-    price: string[]
+    price: { [key: string]: number }
 }
 
 export interface EditFoodItem {
@@ -31,5 +31,5 @@ export interface EditFoodItem {
     newCategoryName: string,
     newImgUrl: string,
     newCustomizable: boolean,
-    newPrice: string[]
+    newPrice: { [key: string]: number }
 }

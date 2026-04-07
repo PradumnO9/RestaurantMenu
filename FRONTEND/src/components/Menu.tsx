@@ -8,13 +8,17 @@ const Menu: React.FC = () => {
     <div className="p-4 my-10 flex justify-center">
       <div className="join join-vertical bg-[#1A1A1A] w-full md:w-[70%] p-2 rounded-md">
         {foodCategory.length > 0 &&
-          foodCategory.map((category: FoodCategory) => {
+          foodCategory.map((category: FoodCategory, index: number) => {
             return (
               <div
                 key={category.id}
                 className="collapse collapse-arrow join-item border-[#1A1A1A] border"
               >
-                <input type="radio" name="my-accordion-4" defaultChecked />
+                <input
+                  type="radio"
+                  name="my-accordion-4"
+                  defaultChecked={index === 0}
+                />
                 <div className="collapse-title font-semibold">
                   {category.categoryName} {"("}
                   {

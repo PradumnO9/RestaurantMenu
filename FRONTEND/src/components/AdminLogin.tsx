@@ -52,8 +52,9 @@ const AdminLogin: React.FC = () => {
     //   }
     // }
 
-    return navigate("/restaurant/menu");
+    setErrorMessage("");
     console.log(data);
+    return navigate("/restaurant/menu");
   };
   return (
     <div className="flex justify-center my-40 md:my-20">

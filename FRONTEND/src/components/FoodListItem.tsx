@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { FoodItem } from "../utils/interface";
 import PopUp from "./PopUps/PopUp";
 import { Link } from "react-router-dom";
@@ -25,7 +25,12 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
               {description}
             </p>
             <div className="text-xs uppercase font-semibold opacity-60">
-              {price}
+              {Object.entries(price).map(([size, value]) => (
+                <span key={size}>
+                  {size.charAt(0).toUpperCase() + size.slice(1)}: ₹{value}
+                  <br />
+                </span>
+              ))}
             </div>
           </div>
           <div className="ml-auto">
@@ -56,20 +61,23 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
         <div className="bg-[#1A1A1A] rouned-xl px-20 py-10 flex flex-col gap-5 items-center mx-3">
           <ul>
             <li className="flex flex-col gap-2">
-              {price.length > 1 &&
-                price.map((item, index) => (
-                  <div key={index}>
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="radio-3"
-                        className="radio radio-neutral"
-                        value={parseInt(item.split(" ")[1], 10)}
-                        defaultChecked
-                      />
-                      <span>{item} /-</span>
-                    </label>
-                  </div>
+              {price &&
+                Object.entries(price).map(([size, value]) => (
+                  <label
+                    key={size}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="radio-3"
+                      className="radio radio-neutral"
+                      value={value}
+                      defaultChecked
+                    />
+                    <span>
+                      {size.charAt(0).toUpperCase() + size.slice(1)}: ₹{value}
+                    </span>
+                  </label>
                 ))}
             </li>
           </ul>
@@ -98,3 +106,18 @@ export default FoodListItem;
 //     Add Item
 //   </button>
 // </div>
+
+{
+  /* <div key={index}>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="radio-3"
+                        className="radio radio-neutral"
+                        value={parseInt(item.split(" ")[1], 10)}
+                        defaultChecked
+                      />
+                      <span>{item} /-</span>
+                    </label>
+                  </div> */
+}

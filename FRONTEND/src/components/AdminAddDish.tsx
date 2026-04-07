@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import type { FoodItem } from "../utils/interface";
 import { MdClose } from "react-icons/md";
+import { foodCategory } from "../utils/constant";
+import { useNavigate } from "react-router-dom";
 
 const AdminAddDish = () => {
   const [dishData, setDishData] = useState<FoodItem>({
     id: "",
     name: "",
     description: "",
-    categoryName: "",
+    categoryName: foodCategory[0]?.categoryName || "",
     imgUrl: "",
-    price: [],
+    price: {},
     customizable: false,
   });
 
+  const navigate = useNavigate();
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
-  const [pricePreview, setPricePreview] = useState<string>("");
+  const [pricePreview, setPreicePriview] = useState<{ [key: string]: number }>(
+    {},
+  );
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
@@ -37,9 +44,11 @@ const AdminAddDish = () => {
 
   const handleAddPrice = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (pricePreview.trim() === "") return;
-    setDishData({ ...dishData, price: [...dishData.price, pricePreview] });
-    setPricePreview("");
+    setDishData({
+      ...dishData,
+      price: { ...dishData.price, ...pricePreview },
+    });
+    setPreicePriview({});
   };
 
   const handleRemovePrice = (
@@ -47,13 +56,29 @@ const AdminAddDish = () => {
     index: number,
   ) => {
     e.preventDefault();
-    const updatedPrices = dishData.price.filter((_, i) => i !== index);
-    setDishData({ ...dishData, price: updatedPrices });
+    const updatedPrice = { ...dishData.price };
+    const keyToRemove = Object.keys(dishData.price)[index];
+    delete updatedPrice[keyToRemove];
+    setDishData({ ...dishData, price: updatedPrice });
   };
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !dishData.name ||
+      !dishData.description ||
+      !dishData.categoryName ||
+      Object.keys(dishData.price).length === 0 ||
+      !dishData.imgUrl
+    ) {
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+
     console.log("Dish Data:", dishData);
+    setErrorMessage("");
+    navigate("/restaurant/menu");
   };
 
   return (
@@ -81,26 +106,31 @@ const AdminAddDish = () => {
                 />
               </label>
             </div>
-            <div className="">
+            <div>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text text-[#F5F5F5]">
                     Dish Category
                   </span>
                 </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full max-w-xs my-2"
-                  name="categoryName"
-                  placeholder="Enter category name"
+                <select
                   value={dishData.categoryName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setDishData({ ...dishData, categoryName: e.target.value })
-                  }
-                />
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    setDishData({
+                      ...dishData,
+                      categoryName: e.target.value,
+                    });
+                  }}
+                  className="select mt-2 w-full max-w-xs"
+                >
+                  <option disabled={true}>Choose dish category</option>
+                  {foodCategory.map((category) => (
+                    <option key={category.id}>{category.categoryName}</option>
+                  ))}
+                </select>
               </label>
             </div>
-            <div className="">
+            <div>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text text-[#F5F5F5]">Description</span>
@@ -116,7 +146,7 @@ const AdminAddDish = () => {
                 ></textarea>
               </label>
             </div>
-            <div className="">
+            <div>
               <label className="form-control w-full max-w-xs">
                 <div className="label">
                   <span className="label-text text-[#F5F5F5]">
@@ -145,16 +175,35 @@ const AdminAddDish = () => {
                   <span className="label-text text-[#F5F5F5]">Price /-</span>
                 </div>
                 <div className="grid grid-cols-4 w-[96%]">
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs col-span-3 price-input"
-                    name="pricePreview"
-                    placeholder="eg. full 250"
-                    value={pricePreview}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setPricePreview(e.target.value)
-                    }
-                  />
+                  <div className="grid grid-cols-6 col-span-3">
+                    <input
+                      type="text"
+                      className="input input-bordered w-full max-w-xs col-span-3 price-input"
+                      name="pricePreview"
+                      value={Object.keys(pricePreview)[0] || ""}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPreicePriview({
+                          [e.target.value.toLowerCase()]:
+                            Object.values(pricePreview)[0] || 0,
+                        })
+                      }
+                      placeholder="eg. full"
+                    />
+                    <input
+                      type="text"
+                      className="input input-bordered w-full max-w-xs col-span-3 price-input-noradius"
+                      name="pricePreview"
+                      value={Object.values(pricePreview)[0] || ""}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPreicePriview({
+                          [Object.keys(pricePreview)[0] || ""]: Number(
+                            e.target.value,
+                          ),
+                        })
+                      }
+                      placeholder="eg. 250"
+                    />
+                  </div>
                   <button
                     onClick={handleAddPrice}
                     className="bg-[#D4AF37] hover:bg-[#E6C65C] cursor-pointer rounded-r-md col-span-1"
@@ -164,12 +213,14 @@ const AdminAddDish = () => {
                 </div>
               </label>
               <ul>
-                {dishData.price.map((data, index) => (
+                {Object.entries(dishData.price).map(([key, value], index) => (
                   <li
                     key={index}
                     className="text-[#F5F5F5] p-2 rounded-md bg-base-100 grid grid-cols-4 w-[96%] my-2"
                   >
-                    <span className="col-span-3">{data}</span>
+                    <span className="col-span-3">
+                      {key.charAt(0).toUpperCase() + key.slice(1)}: ₹{value}
+                    </span>
                     <button
                       className="ml-auto mr-2 cursor-pointer"
                       onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
@@ -202,6 +253,9 @@ const AdminAddDish = () => {
                 />
               </label>
             </div>
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+            )}
             <div className="card-actions">
               <button className="bg-[#D4AF37] hover:bg-[#E6C65C] w-[96%] text-lg p-2 cursor-pointer rounded-md">
                 Add Dish
