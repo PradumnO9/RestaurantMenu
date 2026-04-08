@@ -33,3 +33,10 @@ export interface EditFoodItem {
     newCustomizable: boolean,
     newPrice: { [key: string]: number }
 }
+
+export interface AdminState {
+    value: {
+        email: string,
+        password: string
+    }
+}

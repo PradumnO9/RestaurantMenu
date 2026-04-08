@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import type { FoodItem } from "../utils/interface";
 import PopUp from "./PopUps/PopUp";
 import { Link } from "react-router-dom";
@@ -35,7 +35,11 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
           </div>
           <div className="ml-auto">
             <div className="relative">
-              <img className="size-28 rounded-box max-w-md" src={imgUrl} />
+              <img
+                className="size-28 rounded-box max-w-md"
+                src={imgUrl}
+                alt={name}
+              />
               <div className="flex justify-center absolute -bottom-3 w-full">
                 {type === "admin" ? (
                   <Link

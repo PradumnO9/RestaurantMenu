@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import type { AdminData } from "../utils/interface";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+import { useAppDispatch } from "../redux/hooks";
+import { addUser } from "../redux/adminSlice";
 
 const AdminLogin: React.FC = () => {
   const [data, setData] = useState<AdminData>({
@@ -11,6 +13,9 @@ const AdminLogin: React.FC = () => {
   });
   const [eyeToggle, setEyeToggle] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   // const dummy_user = {
   //   email: "pradumn2999@gmail.com",
@@ -29,8 +34,6 @@ const AdminLogin: React.FC = () => {
       [name]: value,
     }));
   };
-
-  const navigate = useNavigate();
 
   const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,6 +56,7 @@ const AdminLogin: React.FC = () => {
     // }
 
     setErrorMessage("");
+    dispatch(addUser(data));
     console.log(data);
     return navigate("/restaurant/menu");
   };

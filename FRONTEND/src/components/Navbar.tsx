@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
           <li className="md:hidden">
             <details>
               <summary className="text-[#D4AF37] text-lg">Click Here</summary>
-              <ul className="rounded-t-none p-2">
+              <ul className="rounded-t-none bg-[#1A1A1A] p-2">
                 <li className="text-[#D4AF37] text-lg">
                   <Link to={"/restaurant/menu"}>Menu</Link>
                 </li>
