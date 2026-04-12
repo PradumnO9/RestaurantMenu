@@ -75,7 +75,7 @@ READONLYENGINE  = create_engine(os.getenv("PGDB_URL") , connect_args={
     "options": "-c default_transaction_read_only=on"  # PostgreSQL-specific  
     }  )
 READWRITEENGINE  = create_engine(os.getenv("PGDB_URL"))
-@mainapp.websocket("/ws")
+# @mainapp.websocket("/ws")
 
 
 """
@@ -91,7 +91,8 @@ ADMIN APIS
 
 # POST  /api/login/{adminname}{hashpassword} 
 @mainapp.post("/api/login/")
-def __post_login_details(admin_name:str ,hash_password:str ):
+def __post_login_details(data:dict):
+    admin_name ,hash_password = data["admin_name"], data["hash_password"]
     with open('./app/admin.ini','r') as admin_file:
         authenticate = False
         for line in  admin_file.readlines()[1:]:
