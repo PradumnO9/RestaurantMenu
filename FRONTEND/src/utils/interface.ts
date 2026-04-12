@@ -1,6 +1,8 @@
 export interface AdminData {
     email: string,
-    password: string
+    password: string,
+    isLoggedIn: boolean,
+    type: string
 }
 
 export interface AddItemPopUpProps {
@@ -34,9 +36,7 @@ export interface EditFoodItem {
     newPrice: { [key: string]: number }
 }
 
-export interface AdminState {
-    value: {
-        email: string,
-        password: string
-    }
+export interface MenuState {
+    menuItems: FoodItem[],
+    categories: FoodCategory[]
 }

@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import { foodItems, foodCategory } from "../utils/constant";
 import type { EditFoodItem, FoodItem } from "../utils/interface";
+import { useAppSelector } from "../redux/hooks";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -8,6 +8,10 @@ import PopUp from "./PopUps/PopUp";
 
 const ViewFoodItem = () => {
   const { foodItemId } = useParams();
+
+  const foodItems = useAppSelector((store) => store.menu.menuItems);
+  const foodCategory = useAppSelector((store) => store.menu.categories);
+
   const foodItem: FoodItem | undefined = foodItems.find(
     (item) => item.id === foodItemId,
   );

@@ -10,6 +10,8 @@ const AdminLogin: React.FC = () => {
   const [data, setData] = useState<AdminData>({
     email: "",
     password: "",
+    isLoggedIn: true,
+    type: "admin",
   });
   const [eyeToggle, setEyeToggle] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,7 +59,6 @@ const AdminLogin: React.FC = () => {
 
     setErrorMessage("");
     dispatch(addUser(data));
-    console.log(data);
     return navigate("/restaurant/menu");
   };
   return (

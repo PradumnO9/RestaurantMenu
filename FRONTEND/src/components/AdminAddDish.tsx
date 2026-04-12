@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import type { FoodItem } from "../utils/interface";
 import { MdClose } from "react-icons/md";
-import { foodCategory } from "../utils/constant";
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "../redux/hooks";
 const AdminAddDish = () => {
+  const foodCategory = useAppSelector((store) => store.menu.categories);
+
   const [dishData, setDishData] = useState<FoodItem>({
     id: "",
     name: "",

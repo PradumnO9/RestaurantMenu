@@ -1,9 +1,12 @@
 import type React from "react";
-import { foodCategory, foodItems } from "../utils/constant";
 import type { FoodCategory, FoodItem } from "../utils/interface";
 import FoodListItem from "./FoodListItem";
+import { useAppSelector } from "../redux/hooks";
 
 const Menu: React.FC = () => {
+  const foodItems = useAppSelector((store) => store.menu.menuItems);
+  const foodCategory = useAppSelector((store) => store.menu.categories);
+
   return (
     <div className="p-4 my-10 flex justify-center">
       <div className="join join-vertical bg-[#1A1A1A] w-full md:w-[70%] p-2 rounded-md">

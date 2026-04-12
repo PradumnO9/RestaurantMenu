@@ -1,25 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { AdminState } from "../utils/interface";
+import type { AdminData } from "../utils/interface";
 
-const initialState: AdminState = {
-    value: {
-        email: "",
-        password: ""
-    } 
+const initialState: AdminData = {
+    email: "",
+    password: "",
+    isLoggedIn: false,
+    type: ""
 }
 
 const adminSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {
-        addUser: (state, action: PayloadAction<{email: string, password: string}>) => {
-            state.value.email = action.payload.email
-            state.value.password = action.payload.password
+        addUser: (state, action: PayloadAction<AdminData>) => {
+            return action.payload
         },
-        removeUser: (state) => {
-            state.value.email = ""
-            state.value.password = ""
+        removeUser: () => {
+            return initialState
         }
     }
 })

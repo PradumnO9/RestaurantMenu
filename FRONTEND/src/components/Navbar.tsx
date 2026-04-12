@@ -1,8 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiShoppingCart } from "react-icons/hi2";
+import useMenu from "../hooks/useMenu";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { removeUser } from "../redux/adminSlice";
 
 const Navbar: React.FC = () => {
-  const type = "admin"; // Change to "admin" for admin view
+  const { isLoggedIn, type } = useAppSelector((store) => store.admin);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(removeUser());
+    navigate("/admin/auth");
+  };
+
+  useMenu();
   return (
     <div className="navbar bg-[#0F0F0F] shadow-md h-16 sticky top-0 z-10">
       <div className="flex-1">
@@ -12,7 +25,7 @@ const Navbar: React.FC = () => {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
-          {type !== "admin" && (
+          {isLoggedIn && type === "user" && (
             <li className="mr-2">
               <Link to={"/cart"}>
                 <HiShoppingCart size={30} color="#D4AF37" />
@@ -22,37 +35,48 @@ const Navbar: React.FC = () => {
               </span>
             </li>
           )}
-          <li className="text-[#D4AF37] text-lg sm:block hidden">
-            <Link to={"/restaurant/menu"}>Menu</Link>
-          </li>
-          <li className="text-[#D4AF37] text-lg sm:block hidden">
-            <Link to={"/admin/add-dish"}>Add Dish</Link>
-          </li>
-          <li className="text-[#D4AF37] text-lg sm:block hidden">
-            <Link to={"/admin/add-category"}>Add Category</Link>
-          </li>
-          <li className="text-[#D4AF37] text-lg sm:block hidden">
-            <Link to={"/admin/auth"}>Login</Link>
-          </li>
-          <li className="md:hidden">
-            <details>
-              <summary className="text-[#D4AF37] text-lg">Click Here</summary>
-              <ul className="rounded-t-none bg-[#1A1A1A] p-2">
-                <li className="text-[#D4AF37] text-lg">
-                  <Link to={"/restaurant/menu"}>Menu</Link>
-                </li>
-                <li className="text-[#D4AF37] text-lg">
-                  <Link to={"/admin/add-dish"}>Add Dish</Link>
-                </li>
-                <li className="text-[#D4AF37] text-lg">
-                  <Link to={"/admin/add-category"}>Add Category</Link>
-                </li>
-                <li className="text-[#D4AF37] text-lg">
-                  <Link to={"/admin/auth"}>Login</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
+          {isLoggedIn && type === "admin" && (
+            <>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/restaurant/menu"}>Menu</Link>
+              </li>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/admin/add-dish"}>Add Dish</Link>
+              </li>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/admin/add-category"}>Add Category</Link>
+              </li>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+              <li className="md:hidden">
+                <details>
+                  <summary className="text-[#D4AF37] text-lg">
+                    Click Here
+                  </summary>
+                  <ul className="rounded-t-none bg-[#1A1A1A] p-2">
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/restaurant/menu"}>Menu</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/admin/add-dish"}>Add Dish</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/admin/add-category"}>Add Category</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+            </>
+          )}
+          {!isLoggedIn && (
+            <li className="text-[#D4AF37] text-lg sm:block hidden">
+              <Link to={"/admin/auth"}>Login</Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

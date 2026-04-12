@@ -1,9 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import adminReducer from "./adminSlice";
+import menuReducer from "./menuSlice";
 
 export const appStore = configureStore({
     reducer: {
-        admin: adminReducer
+        admin: adminReducer,
+        menu: menuReducer
     }
 })
 
