@@ -7,6 +7,7 @@ from .sqllmodel import SQLModel
 
 
 
-# class CustomerSession(SQLModel, table = True):
-#     CustomerSession: Optional[factorytype]
-#     Qr_Fid: Optional[int] = Field(default=None)
+class CustomerSession(SQLModel, table = True):
+    __tablename__ = 'customersession'
+    CustomerSession: str = Field (primary_key = True)
+    Qr_Fid: Optional[int] = Field(default = None)

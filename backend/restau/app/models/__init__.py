@@ -1,10 +1,13 @@
-from .sqllmodel import target_metadata, Food, FoodRegionalType , Dinespace  ,DineTable   ,Orders
+from .sqllmodel import target_metadata,   Food,   FoodRegionalType ,   DineTable,   Dinespace,   Orders ,   Customer ,   CustomerSession
 
 
-# __all__=["target_metadata","Food", "FoodRegionalType", "Price"]
 
-
-__all__=["Food" ,"FoodRegionalType", "Customer" ,
-# "CustomerSession",
-"Dinespace"  ,"DineTable"   ,"Orders"
+__all__=[
+        "Food" 
+    ,   "FoodRegionalType"
+    ,   "DineTable"
+    ,   "Dinespace" 
+    ,   "Orders"  
+    ,   "Customer"   
+    ,   "CustomerSession"
     ]

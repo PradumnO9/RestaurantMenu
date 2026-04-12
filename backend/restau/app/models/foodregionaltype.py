@@ -1,9 +1,9 @@
 from sqlmodel import SQLModel,Field,ForeignKey,Relationship
 from typing import Optional, List
-from .sqllmodel import SQLModel
-
+from .sqllmodel import SQLModel 
 class FoodRegionalType(SQLModel,table=True):
+    __tablename__='foodregionaltype'
     FoodRegionalTypeId : Optional[int] =  Field( primary_key=True)  
     FoodRegionalTypeName :str = Field( default='')
-    Foods: List["Food"]= Relationship(back_populates = "Food")  
+    Foods: List["Food"]= Relationship(back_populates = "foodregionaltype")  
 

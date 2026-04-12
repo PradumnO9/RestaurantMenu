@@ -6,6 +6,7 @@ from .sqllmodel import SQLModel
 
 
 class Customer(SQLModel, table=True ):
+    __table_name__ = 'customer' 
     CusId : int = Field(default=None, primary_key = True)
     CusName: str =  Field(default = 'NoCustomer')
     CusAddress: str = Field(default = 'CustomerDeclines')

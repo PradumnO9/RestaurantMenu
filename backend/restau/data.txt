@@ -1,0 +1,55 @@
+BaseProfile:
+    __FirstName = str
+    __MiddleName = str
+    __LastName = str
+    __NameCallable = str
+    __ProfileId = str
+    __PersonalEmail = str
+    __PersonalContact = str
+    __CurrentAddress = str
+    __TemporaryAddress = str
+    __PermanentAddress = str
+    __PinCode = str
+    __NativePlace = str
+    __ProfileTypeId = FK
+
+BaseProfileType:
+    ProfileTypeId = Autostr
+    ProfileTypeTitle = str
+
+BaseShiftTime(Duration)
+
+BaseFoodRegionalType:
+    FoodRegionalTypeId = Autostr
+    FoodRegionalTypeName = str
+
+BaseFood:
+    IsAvailable = bool
+    FoodId = Autostr
+    FoodName = str
+    FoodRegionalTypeId = FK
+    FoodAllergenComment = str
+    FoodAlert = str
+    PriceId = Dynamic Insert 
+
+
+
+BasePrice:
+    PriceId = Autostr  
+    FoodId = FK
+    Price =  Float
+
+
+
+
+Restaurant
+    Protected Information
+        __StaffNames = List[Profile]
+        __Owners =  List[Profile]
+    Private Information
+        __Name = 
+        __Address =  
+        
+
+
+
