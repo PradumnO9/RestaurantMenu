@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppSelector } from "../redux/hooks";
 
 const AdminAddCategory = () => {
   const [categoryName, setCategoryName] = React.useState("");
@@ -13,7 +14,9 @@ const AdminAddCategory = () => {
     setCategoryName("");
   };
 
-  return (
+  const { type, isLoggedIn } = useAppSelector((store) => store.admin);
+
+  return isLoggedIn && type === "admin" ? (
     <div className="flex justify-center my-40 md:my-20">
       <form onSubmit={handleSubmit}>
         <div className="card card-border bg-[#1A1A1A] w-96">
@@ -47,6 +50,10 @@ const AdminAddCategory = () => {
           </div>
         </div>
       </form>
+    </div>
+  ) : (
+    <div className="flex justify-center my-40 md:my-20">
+      <p className="text-red-500 text-xl">Please log in First...</p>
     </div>
   );
 };

@@ -5,6 +5,12 @@ export interface AdminData {
     type: string
 }
 
+export interface AdminState {
+    type: string,
+    isLoggedIn: boolean,
+    token: string
+}
+
 export interface AddItemPopUpProps {
     isOpen: boolean,
     onClose: () => void,

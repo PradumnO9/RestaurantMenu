@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { FoodItem } from "../utils/interface";
 import PopUp from "./PopUps/PopUp";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
 interface IPROPS {
   itemData: FoodItem;
 }
@@ -10,7 +11,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
   const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const { name, id, description, customizable, imgUrl, price } = itemData;
 
-  const type = "admin";
+  const { type } = useAppSelector((store) => store.admin);
 
   const openPopUp = () => setIsPopUpOpen(true);
   const closePopUp = () => setIsPopUpOpen(false);
@@ -24,7 +25,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
             <p className="list-col-wrap text-xs max-w-xs md:max-w-md">
               {description}
             </p>
-            <div className="text-xs uppercase font-semibold opacity-60">
+            <div className="text-xs uppercase font-semibold opacity-60 mt-1">
               {Object.entries(price).map(([size, value]) => (
                 <span key={size}>
                   {size.charAt(0).toUpperCase() + size.slice(1)}: ₹{value}
@@ -41,14 +42,15 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
                 alt={name}
               />
               <div className="flex justify-center absolute -bottom-3 w-full">
-                {type === "admin" ? (
+                {type === "admin" && (
                   <Link
                     to={`/restaurant/menu/${id}`}
                     className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
                   >
                     View Item
                   </Link>
-                ) : (
+                )}
+                {type === "user" && (
                   <button
                     onClick={customizable ? openPopUp : undefined}
                     className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"

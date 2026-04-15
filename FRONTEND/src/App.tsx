@@ -5,6 +5,7 @@ import Menu from "./components/Menu";
 import ViewFoodItem from "./components/ViewFoodItem";
 import AdminAddDish from "./components/AdminAddDish";
 import AdminAddCategory from "./components/AdminAddCategory";
+import Cart from "./components/Cart";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           />
           <Route path="/admin/add-dish" element={<AdminAddDish />} />
           <Route path="/admin/add-category" element={<AdminAddCategory />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
       </Routes>
     </BrowserRouter>

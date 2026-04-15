@@ -5,11 +5,12 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 import { useAppDispatch } from "../redux/hooks";
 import { addUser } from "../redux/adminSlice";
+import axios from "axios";
 
 const AdminLogin: React.FC = () => {
   const [data, setData] = useState<AdminData>({
-    email: "",
-    password: "",
+    email: "creator_pradumn_kumar",
+    password: "creator_vishal_dhokia",
     isLoggedIn: true,
     type: "admin",
   });
@@ -19,16 +20,6 @@ const AdminLogin: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // const dummy_user = {
-  //   email: "pradumn2999@gmail.com",
-  //   password: "Pradumn123@",
-  //   _id: "101",
-  //   type: "admin",
-  //   auth_token:
-  //     "LR3SVJSY89kPzWbcAeLEIIyHtydKTHc7IB5PcDytubxBXttRk99hJM4Jkab7wZQs",
-  //   message: "Welcome Pradumn",
-  // };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -37,7 +28,7 @@ const AdminLogin: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!data.email || !data.password) {
@@ -45,22 +36,29 @@ const AdminLogin: React.FC = () => {
       return;
     }
 
-    // if (
-    //   data.email === dummy_user.email &&
-    //   data.password === dummy_user.password
-    // ) {
-    //   if (dummy_user.type === "admin") {
-    //     localStorage.setItem("auth_token", dummy_user.auth_token);
-    //     localStorage.setItem("type", dummy_user.type);
-    //     alert(dummy_user.message);
-    //     return navigate("/restaurant/menu");
-    //   }
-    // }
+    if (
+      data.email !== "creator_pradumn_kumar" ||
+      data.password !== "creator_vishal_dhokia"
+    ) {
+      setErrorMessage("Invalid email or password.");
+      return;
+    }
 
-    setErrorMessage("");
-    dispatch(addUser(data));
-    return navigate("/restaurant/menu");
+    try {
+      const response = await axios.post("http://localhost:8000/api/login/", {
+        admin_name: data.email,
+        hash_password: data.password,
+      });
+      console.log("Response: ", response.data);
+      setErrorMessage("");
+      dispatch(addUser(response.data));
+      localStorage.setItem("adminData", JSON.stringify(response.data));
+      return navigate("/restaurant/menu");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
+
   return (
     <div className="flex justify-center my-40 md:my-20">
       <form onSubmit={handleSubmit}>

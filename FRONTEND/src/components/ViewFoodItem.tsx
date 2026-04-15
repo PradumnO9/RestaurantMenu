@@ -11,6 +11,7 @@ const ViewFoodItem = () => {
 
   const foodItems = useAppSelector((store) => store.menu.menuItems);
   const foodCategory = useAppSelector((store) => store.menu.categories);
+  const { isLoggedIn, type } = useAppSelector((store) => store.admin);
 
   const foodItem: FoodItem | undefined = foodItems.find(
     (item) => item.id === foodItemId,
@@ -104,7 +105,7 @@ const ViewFoodItem = () => {
     console.log("Updated Dish Data:", editDishData);
   };
 
-  return (
+  return type === "admin" && isLoggedIn ? (
     <div className="p-4 max-w-2xl mx-auto flex flex-col items-center">
       <Link
         to="/restaurant/menu"
@@ -383,6 +384,10 @@ const ViewFoodItem = () => {
           </div>
         </div>
       </PopUp>
+    </div>
+  ) : (
+    <div className="p-4 my-10 flex justify-center">
+      <p className="text-red-500 text-xl">Please log in First...</p>
     </div>
   );
 };

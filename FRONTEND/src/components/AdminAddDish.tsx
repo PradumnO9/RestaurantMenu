@@ -18,6 +18,7 @@ const AdminAddDish = () => {
   });
 
   const navigate = useNavigate();
+  const { type, isLoggedIn } = useAppSelector((store) => store.admin);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
@@ -83,7 +84,7 @@ const AdminAddDish = () => {
     navigate("/restaurant/menu");
   };
 
-  return (
+  return isLoggedIn && type === "admin" ? (
     <div className="flex justify-center my-10 md:my-20">
       <form onSubmit={handleSubmit}>
         <div className="card card-border bg-[#1A1A1A] w-96">
@@ -266,6 +267,10 @@ const AdminAddDish = () => {
           </div>
         </div>
       </form>
+    </div>
+  ) : (
+    <div className="flex justify-center my-40 md:my-20">
+      <p className="text-red-500 text-xl">Please log in First...</p>
     </div>
   );
 };
