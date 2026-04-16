@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
   const { isLoggedIn, type } = useAppSelector((store) => store.admin);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const cart = useAppSelector((store) => store.cart);
 
   useEffect(() => {
     const storedAdminData = localStorage.getItem("adminData");
@@ -49,7 +50,7 @@ const Navbar: React.FC = () => {
                   to={"/cart"}
                   className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
                 >
-                  <span>0</span>
+                  <span>{cart.length}</span>
                 </Link>
               </li>
               <li className="text-[#D4AF37] text-lg sm:block hidden">
@@ -109,3 +110,13 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
+{
+  /* <div className="dropdown">
+  <div tabIndex={0} role="button" className="btn m-1">Click</div>
+  <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+    <li><a>Item 1</a></li>
+    <li><a>Item 2</a></li>
+  </ul>
+</div> */
+}

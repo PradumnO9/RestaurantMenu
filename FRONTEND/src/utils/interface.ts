@@ -46,3 +46,13 @@ export interface MenuState {
     menuItems: FoodItem[],
     categories: FoodCategory[]
 }
+
+export interface CartState {
+    foodId: string,
+    foodName: string,
+    foodDescription: string,
+    foodImg: string,
+    foodQty: number,
+    foodPrice: number,
+    foodPriceCategory: string
+}

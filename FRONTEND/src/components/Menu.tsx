@@ -24,7 +24,7 @@ const Menu: React.FC = () => {
             return (
               <div
                 key={category.id}
-                className="collapse collapse-arrow join-item border-[#1A1A1A] border"
+                className="collapse collapse-arrow join-item border-[#1A1A1A]"
               >
                 <input
                   type="radio"

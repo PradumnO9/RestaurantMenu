@@ -41,7 +41,7 @@ export const foodItems: FoodItem[] = [
       "categoryName": "Starter",
       "imgUrl": "https://myfoodstory.com/wp-content/uploads/2018/10/Honey-Chilli-Potatoes-1.jpg",
       "price": {"half": 70, "full": 100},
-      "customizable": false
+      "customizable": true
     },
     {
       "id": "104",
