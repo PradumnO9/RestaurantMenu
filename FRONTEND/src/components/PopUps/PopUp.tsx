@@ -16,7 +16,7 @@ const PopUp: React.FC<AddItemPopUpProps> = ({ isOpen, onClose, children }) => {
       onClick={handleBackdropClick}
       className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50"
     >
-      <div className="mx-1 flex flex-col gap-5">
+      <div className="mx-1 flex flex-col gap-5 relative z-50">
         <button onClick={onClose}>
           <MdClose
             size={24}

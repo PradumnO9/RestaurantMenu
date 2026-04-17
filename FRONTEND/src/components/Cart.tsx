@@ -1,24 +1,18 @@
-import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { removeToCart } from "../redux/cartSlice";
 
 const Cart = () => {
-  const [itemQty, setItemQty] = useState<number>(0);
   const dispatch = useAppDispatch();
   const cartData = useAppSelector((store) => store.cart);
 
-  const plusHandler = () => {
-    setItemQty((prevQty) => prevQty + 1);
-  };
-  const minusHandler = () => {
-    if (itemQty > 0) {
-      setItemQty((preveQty) => preveQty - 1);
-    }
-  };
+  const plusHandler = () => {};
+  const minusHandler = () => {};
 
-  // const removeCartItem = (itemId:number) => {
-  //   dispatch(removeCartItem(itemId))
-  // }
+  const removeCartItem = (cartItemId: string) => {
+    console.log("I am here...");
+    dispatch(removeToCart(cartItemId));
+  };
 
   if (cartData.length === 0) {
     return (
@@ -37,7 +31,7 @@ const Cart = () => {
         {cartData.length > 0 &&
           cartData.map((item) => {
             return (
-              <li key={item.foodId} className="list-row">
+              <li key={item.cartItemId} className="list-row">
                 <div>
                   <img
                     className="size-22 rounded-box max-w-xs md:max-w-md"
@@ -45,13 +39,21 @@ const Cart = () => {
                   />
                 </div>
                 <div className=" max-w-xs md:max-w-md">
-                  <div>{item.foodName}</div>
+                  <div>
+                    {item.foodName}
+                    {" ("}
+                    {item.foodPriceCategory}
+                    {")"}
+                  </div>
                   <p className="list-col-wrap text-xs opacity-90">
                     {item.foodDescription}
                   </p>
                 </div>
                 <div className="flex flex-col max-w-xs md:max-w-md gap-2">
-                  <button className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer">
+                  <button
+                    onClick={() => removeCartItem(item.cartItemId)}
+                    className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
+                  >
                     Delete
                   </button>
                   <div>

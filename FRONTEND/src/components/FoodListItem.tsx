@@ -13,6 +13,7 @@ interface IPROPS {
 const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
   const { name, id, description, customizable, imgUrl, price } = itemData;
   const [cartItem, setCartItem] = useState<CartState>({
+    cartItemId: "",
     foodId: id,
     foodName: name,
     foodDescription: description,
@@ -25,6 +26,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
   const [itemQty, setItemQty] = useState<number>(0);
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const dispatch = useAppDispatch();
+  const uniqueId = crypto.randomUUID();
 
   const { type } = useAppSelector((store) => store.admin);
 
@@ -77,31 +79,29 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
               ))}
             </div>
           </div>
-          <div className="ml-auto">
-            <div className="relative">
-              <img
-                className="size-28 rounded-box max-w-md"
-                src={imgUrl}
-                alt={name}
-              />
-              <div className="flex justify-center absolute -bottom-3 w-full">
-                {type === "admin" && (
-                  <Link
-                    to={`/restaurant/menu/${id}`}
-                    className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
-                  >
-                    View Item
-                  </Link>
-                )}
-                {type === "user" && (
-                  <button
-                    onClick={customizable ? openPopUp : undefined}
-                    className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
-                  >
-                    Add Item
-                  </button>
-                )}
-              </div>
+          <div className="ml-auto relative">
+            <img
+              className="size-28 rounded-box max-w-md"
+              src={imgUrl}
+              alt={name}
+            />
+            <div className="flex justify-center mt-2">
+              {type === "admin" && (
+                <Link
+                  to={`/restaurant/menu/${id}`}
+                  className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
+                >
+                  View Item
+                </Link>
+              )}
+              {type === "user" && (
+                <button
+                  onClick={customizable ? openPopUp : undefined}
+                  className="bg-[#D4AF37] px-2 py-1 rounded-md hover:bg-[#E6C65C] cursor-pointer"
+                >
+                  Add Item
+                </button>
+              )}
             </div>
           </div>
         </li>
@@ -125,7 +125,9 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
                         setSelectedPrice(Number(e.target.value));
                         setCartItem((prev) => ({
                           ...prev,
+                          cartItemId: uniqueId,
                           foodPrice: itemQty * Number(e.target.value),
+                          foodPriceCategory: size,
                         }));
                       }}
                     />

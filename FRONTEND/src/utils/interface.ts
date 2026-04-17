@@ -48,6 +48,7 @@ export interface MenuState {
 }
 
 export interface CartState {
+    cartItemId: string,
     foodId: string,
     foodName: string,
     foodDescription: string,
