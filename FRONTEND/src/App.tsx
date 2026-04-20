@@ -6,6 +6,7 @@ import ViewFoodItem from "./components/ViewFoodItem";
 import AdminAddDish from "./components/AdminAddDish";
 import AdminAddCategory from "./components/AdminAddCategory";
 import Cart from "./components/Cart";
+import OrderPlaced from "./components/OrderPlaced";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           />
           <Route path="/admin/add-dish" element={<AdminAddDish />} />
           <Route path="/admin/add-category" element={<AdminAddCategory />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/restaurant/cart" element={<Cart />} />
+          <Route path="/restaurant/order-placed" element={<OrderPlaced />} />
         </Route>
       </Routes>
     </BrowserRouter>

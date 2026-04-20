@@ -125,7 +125,7 @@ const ViewFoodItem = () => {
               />
               {!imagePreview && (
                 <img
-                  src={foodItem.imgUrl}
+                  src={foodItem.imgUrl ? foodItem.imgUrl : undefined}
                   alt={foodItem.name}
                   className="w-full h-64 object-cover rounded-box mb-4"
                 />
@@ -134,7 +134,7 @@ const ViewFoodItem = () => {
             <div>
               {selectImageFile && (
                 <img
-                  src={imagePreview}
+                  src={imagePreview ? imagePreview : undefined}
                   alt="Selected"
                   className="w-full h-64 object-cover rounded-box mb-4"
                 />

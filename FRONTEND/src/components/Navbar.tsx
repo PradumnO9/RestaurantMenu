@@ -4,6 +4,7 @@ import useMenu from "../hooks/useMenu";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addUser, removeUser } from "../redux/adminSlice";
 import { useEffect } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Navbar: React.FC = () => {
   const { isLoggedIn, type } = useAppSelector((store) => store.admin);
@@ -43,11 +44,11 @@ const Navbar: React.FC = () => {
           {isLoggedIn && type === "user" && (
             <>
               <li className="mr-2">
-                <Link to={"/cart"}>
+                <Link to={"/restaurant/cart"}>
                   <HiShoppingCart size={30} color="#D4AF37" />
                 </Link>
                 <Link
-                  to={"/cart"}
+                  to={"/restaurant/cart"}
                   className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
                 >
                   <span>{cart.length}</span>
@@ -56,8 +57,33 @@ const Navbar: React.FC = () => {
               <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <Link to={"/restaurant/menu"}>Menu</Link>
               </li>
-              <li className="text-[#D4AF37] text-lg">
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/restaurant/order-placed"}>Order Placed</Link>
+              </li>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <button onClick={handleLogout}>Logout</button>
+              </li>
+              <li className="md:hidden lg:hidden sm:hidden">
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="text-[#D4AF37] text-lg"
+                  >
+                    <GiHamburgerMenu size={30} />
+                  </div>
+                  <ul className="menu dropdown-content rounded-t-none bg-[#1A1A1A] p-2 rounded-box z-1 mt-4 w-52 shadow-sm">
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/restaurant/menu"}>Menu</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/restaurant/order-placed"}>Order Placed</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </div>
               </li>
             </>
           )}
@@ -75,12 +101,16 @@ const Navbar: React.FC = () => {
               <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <button onClick={handleLogout}>Logout</button>
               </li>
-              <li className="md:hidden">
-                <details>
-                  <summary className="text-[#D4AF37] text-lg">
-                    Click Here
-                  </summary>
-                  <ul className="rounded-t-none bg-[#1A1A1A] p-2">
+              <li className="md:hidden lg:hidden sm:hidden">
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="text-[#D4AF37] text-lg"
+                  >
+                    <GiHamburgerMenu size={30} />
+                  </div>
+                  <ul className="menu dropdown-content rounded-t-none bg-[#1A1A1A] p-2 rounded-box z-1 mt-4 w-52 shadow-sm">
                     <li className="text-[#D4AF37] text-lg">
                       <Link to={"/restaurant/menu"}>Menu</Link>
                     </li>
@@ -94,7 +124,7 @@ const Navbar: React.FC = () => {
                       <button onClick={handleLogout}>Logout</button>
                     </li>
                   </ul>
-                </details>
+                </div>
               </li>
             </>
           )}
@@ -112,11 +142,23 @@ const Navbar: React.FC = () => {
 export default Navbar;
 
 {
-  /* <div className="dropdown">
-  <div tabIndex={0} role="button" className="btn m-1">Click</div>
-  <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-    <li><a>Item 1</a></li>
-    <li><a>Item 2</a></li>
-  </ul>
-</div> */
+  /* <details>
+                  <summary className="text-[#D4AF37] text-lg">
+                    Click Here
+                  </summary>
+                  <ul className="rounded-t-none bg-[#1A1A1A] p-2">
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/restaurant/menu"}>Menu</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/admin/add-dish"}>Add Dish</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <Link to={"/admin/add-category"}>Add Category</Link>
+                    </li>
+                    <li className="text-[#D4AF37] text-lg">
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
+                  </ul>
+                </details> */
 }

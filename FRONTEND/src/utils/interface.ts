@@ -57,3 +57,10 @@ export interface CartState {
     foodPrice: number,
     foodPriceCategory: string
 }
+
+export interface OrderPlacedState {
+    cart: CartState[],
+    orderPlacedId: string,
+    orderPlacedDateAndTime: string,
+    totalPrice: number
+}

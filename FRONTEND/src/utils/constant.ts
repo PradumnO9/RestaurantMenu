@@ -23,7 +23,7 @@ export const foodItems: FoodItem[] = [
       "categoryName": "Fast Food",
       "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1IvOEs9XPj4AaKqnTnI5698CueUIQ600TRA&s",
       "price": {"full": 100},
-      "customizable": false
+      "customizable": true
     },
     {
       "id": "102",

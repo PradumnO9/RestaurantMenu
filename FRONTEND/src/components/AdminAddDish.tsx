@@ -165,7 +165,7 @@ const AdminAddDish = () => {
               {selectedFile && (
                 <div className="my-4 w-[96%]">
                   <img
-                    src={preview}
+                    src={preview ? preview : undefined}
                     alt="Preview"
                     className="w-full h-auto rounded-md"
                   />

@@ -2,12 +2,14 @@ import {configureStore} from "@reduxjs/toolkit";
 import adminReducer from "./adminSlice";
 import menuReducer from "./menuSlice";
 import cartReducer from "./cartSlice";
+import orderPlacedReducer from './orderPlacedSlice';
 
 export const appStore = configureStore({
     reducer: {
         admin: adminReducer,
         menu: menuReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        orderPlaced: orderPlacedReducer
     }
 })
 

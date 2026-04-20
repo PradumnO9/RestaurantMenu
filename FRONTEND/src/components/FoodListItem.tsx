@@ -57,7 +57,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
   };
 
   const handleAddItem = () => {
-    console.log(cartItem);
+    setCartItem({ ...cartItem, cartItemId: uniqueId });
     dispatch(addToCart(cartItem));
   };
 
@@ -85,7 +85,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
               src={imgUrl}
               alt={name}
             />
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center -mt-2">
               {type === "admin" && (
                 <Link
                   to={`/restaurant/menu/${id}`}
@@ -102,6 +102,25 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
                   Add Item
                 </button>
               )}
+              {/* {type === "user" && showQtyButton && (
+                <div>
+                  <button
+                    onClick={handleAddItem}
+                    className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer ml-auto"
+                  >
+                    Add Item
+                  </button>
+                  <div className="flex items-center justify-center my-3">
+                    <div className="bg-[#D4AF37] rounded-full p-0.5 cursor-pointer">
+                      <FaMinus onClick={minusHandler} size={22} />
+                    </div>
+                    <div className="w-8 text-center">{itemQty}</div>
+                    <div className="bg-[#D4AF37] rounded-full p-0.5 cursor-pointer">
+                      <FaPlus onClick={plusHandler} size={22} />
+                    </div>
+                  </div>
+                </div>
+              )} */}
             </div>
           </div>
         </li>
@@ -163,7 +182,6 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
             </button>
           ) : (
             <button
-              onClick={handleAddItem}
               disabled
               className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer ml-auto"
             >
