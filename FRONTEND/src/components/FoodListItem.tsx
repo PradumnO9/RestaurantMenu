@@ -59,6 +59,7 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
   const handleAddItem = () => {
     setCartItem({ ...cartItem, cartItemId: uniqueId });
     dispatch(addToCart(cartItem));
+    closePopUp();
   };
 
   return (

@@ -1,7 +1,9 @@
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { emptyOrderList } from "../redux/orderPlacedSlice";
 
 const OrderPlaced = () => {
   const orderPlacedData = useAppSelector((store) => store.orderPlaced);
+  const dispatch = useAppDispatch();
   const grandTotal = () => {
     let total = 0;
     orderPlacedData.forEach((data) => {
@@ -12,6 +14,7 @@ const OrderPlaced = () => {
 
   const paymentHandler = () => {
     console.log("Payment Initiated...");
+    dispatch(emptyOrderList());
   };
 
   return orderPlacedData.length === 0 ? (

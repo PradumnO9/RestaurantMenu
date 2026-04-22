@@ -62,3 +62,33 @@ export const foodItems: FoodItem[] = [
       "customizable": true
     }
   ]
+
+// Custom storage that handles cases where localStorage is not available
+export const customStorage = {
+  getItem: (key: string) => {
+    try {
+      return Promise.resolve(localStorage.getItem(key));
+    } catch (error) {
+      console.warn('localStorage not available:', error);
+      return Promise.resolve(null);
+    }
+  },
+  setItem: (key: string, value: string) => {
+    try {
+      localStorage.setItem(key, value);
+      return Promise.resolve();
+    } catch (error) {
+      console.warn('localStorage not available:', error);
+      return Promise.resolve();
+    }
+  },
+  removeItem: (key: string) => {
+    try {
+      localStorage.removeItem(key);
+      return Promise.resolve();
+    } catch (error) {
+      console.warn('localStorage not available:', error);
+      return Promise.resolve();
+    }
+  },
+};

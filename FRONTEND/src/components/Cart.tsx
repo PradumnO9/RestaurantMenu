@@ -143,17 +143,17 @@ const Cart = () => {
           </button>
         </div>
         <PopUp isOpen={isDeleteCartPopUp} onClose={closeDeleteCartPopUp}>
-          <div
-            onClick={() => {
-              dispatch(deleteCart());
-            }}
-            className="bg-[#1A1A1A] rouned-xl px-20 py-10 flex flex-col gap-5 items-center mx-3"
-          >
+          <div className="bg-[#1A1A1A] rouned-xl px-20 py-10 flex flex-col gap-5 items-center mx-3">
             <h2 className="text-lg">
               Are you sure you want to delete the whole cart ?
             </h2>
             <div className="flex gap-10">
-              <button className="bg-[#D4AF37] hover:bg-[#C0A020] px-4 py-1 rounded-md cursor-pointer ml-auto">
+              <button
+                onClick={() => {
+                  dispatch(deleteCart());
+                }}
+                className="bg-[#D4AF37] hover:bg-[#C0A020] px-4 py-1 rounded-md cursor-pointer ml-auto"
+              >
                 Yes, Delete
               </button>
               <button

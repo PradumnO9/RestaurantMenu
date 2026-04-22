@@ -11,6 +11,7 @@ const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const cart = useAppSelector((store) => store.cart);
+  const orderPlaced = useAppSelector((store) => store.orderPlaced);
 
   useEffect(() => {
     const storedAdminData = localStorage.getItem("adminData");
@@ -47,18 +48,28 @@ const Navbar: React.FC = () => {
                 <Link to={"/restaurant/cart"}>
                   <HiShoppingCart size={30} color="#D4AF37" />
                 </Link>
-                <Link
-                  to={"/restaurant/cart"}
-                  className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
-                >
-                  <span>{cart.length}</span>
-                </Link>
+                {cart.length > 0 && (
+                  <Link
+                    to={"/restaurant/cart"}
+                    className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
+                  >
+                    <span>{cart.length}</span>
+                  </Link>
+                )}
               </li>
               <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <Link to={"/restaurant/menu"}>Menu</Link>
               </li>
               <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <Link to={"/restaurant/order-placed"}>Order Placed</Link>
+                {orderPlaced.length > 0 && (
+                  <Link
+                    to={"/restaurant/cart"}
+                    className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
+                  >
+                    <span>{orderPlaced.length}</span>
+                  </Link>
+                )}
               </li>
               <li className="text-[#D4AF37] text-lg sm:block hidden">
                 <button onClick={handleLogout}>Logout</button>
@@ -78,6 +89,14 @@ const Navbar: React.FC = () => {
                     </li>
                     <li className="text-[#D4AF37] text-lg">
                       <Link to={"/restaurant/order-placed"}>Order Placed</Link>
+                      {orderPlaced.length > 0 && (
+                        <Link
+                          to={"/restaurant/cart"}
+                          className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
+                        >
+                          <span>{orderPlaced.length}</span>
+                        </Link>
+                      )}
                     </li>
                     <li className="text-[#D4AF37] text-lg">
                       <button onClick={handleLogout}>Logout</button>
