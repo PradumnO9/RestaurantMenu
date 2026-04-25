@@ -2,6 +2,7 @@ import type React from "react";
 import type { FoodCategory, FoodItem } from "../utils/interface";
 import FoodListItem from "./FoodListItem";
 import { useAppSelector } from "../redux/hooks";
+import UnAuthorized from "./UnAuthorized";
 
 const Menu: React.FC = () => {
   const foodItems = useAppSelector((store) => store.menu.menuItems);
@@ -62,9 +63,7 @@ const Menu: React.FC = () => {
       </div>
     </div>
   ) : (
-    <div className="p-4 my-10 flex justify-center">
-      <p className="text-red-500 text-xl">Please log in First...</p>
-    </div>
+    <UnAuthorized />
   );
 };
 

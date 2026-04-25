@@ -7,10 +7,12 @@ import {
   removeToCart,
 } from "../redux/cartSlice";
 import { useState } from "react";
-import PopUp from "./PopUps/PopUp";
+import PopUp from "./ui-utils/PopUp";
 import type { CartState } from "../utils/interface";
 import { useNavigate } from "react-router-dom";
 import { addToOrderList } from "../redux/orderPlacedSlice";
+import UnAuthorized from "./UnAuthorized";
+import ReadMore from "./ui-utils/ReadMore";
 
 const Cart = () => {
   const [isDeleteCartPopUp, setIsDeleteCartPopUp] = useState<boolean>(false);
@@ -55,7 +57,7 @@ const Cart = () => {
   return type === "user" && isLoggedIn ? (
     cartData.length === 0 ? (
       <div className="p-4 my-10 flex justify-center">
-        <p className="text-red-500 text-xl">
+        <p className="text-[#D4AF37] text-xl">
           Your Cart is empty, please add food items
         </p>
       </div>
@@ -67,7 +69,7 @@ const Cart = () => {
             onClick={openDeleteCartPopUp}
             className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer"
           >
-            Delete Cart
+            Empty Cart
           </button>
         </div>
         <ul className="list bg-[#1A1A1A] w-full md:w-[70%] rounded-box shadow-md">
@@ -85,13 +87,19 @@ const Cart = () => {
                     <div>
                       {item.foodName}
                       {" ("}
-                      {item.foodPriceCategory} {"- "}₹
-                      {item.foodPrice / item.foodQty}
+                      {item.foodPriceCategory}
+                      {": "}₹{item.foodPrice / item.foodQty}
                       {")"}
                     </div>
-                    <p className="list-col-wrap text-xs opacity-90">
-                      {item.foodDescription}
-                    </p>
+                    {item.foodDescription.length > 100 ? (
+                      <div className="list-col-wrap text-xs opacity-90">
+                        <ReadMore text={item.foodDescription} />
+                      </div>
+                    ) : (
+                      <div className="list-col-wrap text-xs opacity-90">
+                        {item.foodDescription}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col max-w-xs md:max-w-md gap-2">
                     <button
@@ -145,7 +153,7 @@ const Cart = () => {
         <PopUp isOpen={isDeleteCartPopUp} onClose={closeDeleteCartPopUp}>
           <div className="bg-[#1A1A1A] rouned-xl px-20 py-10 flex flex-col gap-5 items-center mx-3">
             <h2 className="text-lg">
-              Are you sure you want to delete the whole cart ?
+              Are you sure you want to empty the cart ?
             </h2>
             <div className="flex gap-10">
               <button
@@ -154,7 +162,7 @@ const Cart = () => {
                 }}
                 className="bg-[#D4AF37] hover:bg-[#C0A020] px-4 py-1 rounded-md cursor-pointer ml-auto"
               >
-                Yes, Delete
+                Yes, Empty
               </button>
               <button
                 onClick={closeDeleteCartPopUp}
@@ -189,9 +197,7 @@ const Cart = () => {
       </div>
     )
   ) : (
-    <div className="p-4 my-10 flex justify-center">
-      <p className="text-red-500 text-xl">Please log in First...</p>
-    </div>
+    <UnAuthorized />
   );
 };
 

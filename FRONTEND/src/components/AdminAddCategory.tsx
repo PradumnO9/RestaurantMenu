@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../redux/hooks";
+import UnAuthorized from "./UnAuthorized";
 
 const AdminAddCategory = () => {
   const [categoryName, setCategoryName] = React.useState("");
@@ -52,9 +53,7 @@ const AdminAddCategory = () => {
       </form>
     </div>
   ) : (
-    <div className="flex justify-center my-40 md:my-20">
-      <p className="text-red-500 text-xl">Please log in First...</p>
-    </div>
+    <UnAuthorized />
   );
 };
 

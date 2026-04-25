@@ -26,9 +26,13 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    dispatch(removeUser());
-    localStorage.clear();
-    navigate("/admin/auth");
+    if (orderPlaced.length > 0) {
+      alert("Please visit and clear My Orders first");
+    } else {
+      dispatch(removeUser());
+      localStorage.clear();
+      navigate("/admin/auth");
+    }
   };
 
   useMenu();
@@ -44,6 +48,20 @@ const Navbar: React.FC = () => {
         <ul className="menu menu-horizontal px-1">
           {isLoggedIn && type === "user" && (
             <>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/restaurant/menu"}>Menu</Link>
+              </li>
+              <li className="text-[#D4AF37] text-lg sm:block hidden">
+                <Link to={"/restaurant/order-placed"}>My Orders</Link>
+                {orderPlaced.length > 0 && (
+                  <Link
+                    to={"/restaurant/cart"}
+                    className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
+                  >
+                    <span>{orderPlaced.length}</span>
+                  </Link>
+                )}
+              </li>
               <li className="mr-2">
                 <Link to={"/restaurant/cart"}>
                   <HiShoppingCart size={30} color="#D4AF37" />
@@ -54,20 +72,6 @@ const Navbar: React.FC = () => {
                     className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
                   >
                     <span>{cart.length}</span>
-                  </Link>
-                )}
-              </li>
-              <li className="text-[#D4AF37] text-lg sm:block hidden">
-                <Link to={"/restaurant/menu"}>Menu</Link>
-              </li>
-              <li className="text-[#D4AF37] text-lg sm:block hidden">
-                <Link to={"/restaurant/order-placed"}>Order Placed</Link>
-                {orderPlaced.length > 0 && (
-                  <Link
-                    to={"/restaurant/cart"}
-                    className="absolute -top-1 -right-2 min-w-2 rounded-full bg-[#D4AF37] text-black text-xs flex items-center justify-center font-bold"
-                  >
-                    <span>{orderPlaced.length}</span>
                   </Link>
                 )}
               </li>
@@ -88,7 +92,7 @@ const Navbar: React.FC = () => {
                       <Link to={"/restaurant/menu"}>Menu</Link>
                     </li>
                     <li className="text-[#D4AF37] text-lg">
-                      <Link to={"/restaurant/order-placed"}>Order Placed</Link>
+                      <Link to={"/restaurant/order-placed"}>My Orders</Link>
                       {orderPlaced.length > 0 && (
                         <Link
                           to={"/restaurant/cart"}
@@ -148,7 +152,7 @@ const Navbar: React.FC = () => {
             </>
           )}
           {!isLoggedIn && (
-            <li className="text-[#D4AF37] text-lg sm:block hidden">
+            <li className="text-[#D4AF37] text-lg">
               <Link to={"/admin/auth"}>Login</Link>
             </li>
           )}
@@ -159,25 +163,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
-{
-  /* <details>
-                  <summary className="text-[#D4AF37] text-lg">
-                    Click Here
-                  </summary>
-                  <ul className="rounded-t-none bg-[#1A1A1A] p-2">
-                    <li className="text-[#D4AF37] text-lg">
-                      <Link to={"/restaurant/menu"}>Menu</Link>
-                    </li>
-                    <li className="text-[#D4AF37] text-lg">
-                      <Link to={"/admin/add-dish"}>Add Dish</Link>
-                    </li>
-                    <li className="text-[#D4AF37] text-lg">
-                      <Link to={"/admin/add-category"}>Add Category</Link>
-                    </li>
-                    <li className="text-[#D4AF37] text-lg">
-                      <button onClick={handleLogout}>Logout</button>
-                    </li>
-                  </ul>
-                </details> */
-}

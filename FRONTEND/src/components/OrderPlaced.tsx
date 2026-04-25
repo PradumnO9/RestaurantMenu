@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { emptyOrderList } from "../redux/orderPlacedSlice";
+import ReadMore from "./ui-utils/ReadMore";
 
 const OrderPlaced = () => {
   const orderPlacedData = useAppSelector((store) => store.orderPlaced);
@@ -14,12 +15,13 @@ const OrderPlaced = () => {
 
   const paymentHandler = () => {
     console.log("Payment Initiated...");
+    console.log("Total Payable: ", grandTotal());
     dispatch(emptyOrderList());
   };
 
   return orderPlacedData.length === 0 ? (
     <div className="p-4 my-10 flex justify-center">
-      <p className="text-red-500 text-xl">Please order something!</p>
+      <p className="text-[#D4AF37] text-xl">Please order something!</p>
     </div>
   ) : (
     <div className="p-4 my-5 flex flex-col items-center justify-center">
@@ -48,9 +50,15 @@ const OrderPlaced = () => {
                             {foodData.foodPrice / foodData.foodQty}
                             {")"}
                           </div>
-                          <p className="list-col-wrap text-xs opacity-90">
-                            {foodData.foodDescription}
-                          </p>
+                          {foodData.foodDescription.length > 100 ? (
+                            <div className="list-col-wrap text-xs opacity-90">
+                              <ReadMore text={foodData.foodDescription} />
+                            </div>
+                          ) : (
+                            <div className="list-col-wrap text-xs opacity-90">
+                              {foodData.foodDescription}
+                            </div>
+                          )}
                         </div>
                         <div className="flex flex-col max-w-xs md:max-w-md gap-2">
                           <div>

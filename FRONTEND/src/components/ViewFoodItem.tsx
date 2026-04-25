@@ -4,7 +4,8 @@ import { useAppSelector } from "../redux/hooks";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import PopUp from "./PopUps/PopUp";
+import PopUp from "./ui-utils/PopUp";
+import UnAuthorized from "./UnAuthorized";
 
 const ViewFoodItem = () => {
   const { foodItemId } = useParams();
@@ -98,9 +99,6 @@ const ViewFoodItem = () => {
 
   const handleUpdateDish = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Here you would typically send the updated dish data to your backend API
-    // if (newEditedPrice.length > 0) {
-    //   setEditDishData({ ...editDishData, newPrice: newEditedPrice });
-    // }
     e.preventDefault();
     console.log("Updated Dish Data:", editDishData);
   };
@@ -386,9 +384,7 @@ const ViewFoodItem = () => {
       </PopUp>
     </div>
   ) : (
-    <div className="p-4 my-10 flex justify-center">
-      <p className="text-red-500 text-xl">Please log in First...</p>
-    </div>
+    <UnAuthorized />
   );
 };
 

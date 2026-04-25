@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import type { CartState, FoodItem } from "../utils/interface";
-import PopUp from "./PopUps/PopUp";
+import PopUp from "./ui-utils/PopUp";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa6";
 import { addToCart } from "../redux/cartSlice";
+import ReadMore from "./ui-utils/ReadMore";
 interface IPROPS {
   itemData: FoodItem;
 }
@@ -68,9 +69,15 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
         <li className="list-row flex">
           <div>
             <div>{name}</div>
-            <p className="list-col-wrap text-xs max-w-xs md:max-w-md">
-              {description}
-            </p>
+            {description.length > 100 ? (
+              <div className="list-col-wrap text-xs max-w-xs md:max-w-md">
+                <ReadMore text={description} />
+              </div>
+            ) : (
+              <div className="list-col-wrap text-xs max-w-xs md:max-w-md">
+                {description}
+              </div>
+            )}
             <div className="text-xs uppercase font-semibold opacity-60 mt-1">
               {Object.entries(price).map(([size, value]) => (
                 <span key={size}>
@@ -97,31 +104,12 @@ const FoodListItem: React.FC<IPROPS> = ({ itemData }) => {
               )}
               {type === "user" && (
                 <button
-                  onClick={customizable ? openPopUp : undefined}
+                  onClick={openPopUp}
                   className="bg-[#D4AF37] px-2 py-1 rounded-md hover:bg-[#E6C65C] cursor-pointer"
                 >
                   Add Item
                 </button>
               )}
-              {/* {type === "user" && showQtyButton && (
-                <div>
-                  <button
-                    onClick={handleAddItem}
-                    className="bg-[#D4AF37] hover:bg-[#E6C65C] px-2 py-1 rounded-md cursor-pointer ml-auto"
-                  >
-                    Add Item
-                  </button>
-                  <div className="flex items-center justify-center my-3">
-                    <div className="bg-[#D4AF37] rounded-full p-0.5 cursor-pointer">
-                      <FaMinus onClick={minusHandler} size={22} />
-                    </div>
-                    <div className="w-8 text-center">{itemQty}</div>
-                    <div className="bg-[#D4AF37] rounded-full p-0.5 cursor-pointer">
-                      <FaPlus onClick={plusHandler} size={22} />
-                    </div>
-                  </div>
-                </div>
-              )} */}
             </div>
           </div>
         </li>

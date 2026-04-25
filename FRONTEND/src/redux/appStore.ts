@@ -14,22 +14,22 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-        admin: adminReducer,
-        menu: menuReducer,
-        cart: cartReducer,
-        orderPlaced: orderPlacedReducer
-    });
+  admin: adminReducer,
+  menu: menuReducer,
+  cart: cartReducer,
+  orderPlaced: orderPlacedReducer
+});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const appStore = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE', 'persist/REGISTER'],
-        },
-      }),
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE', 'persist/REGISTER'],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof appStore.getState>
