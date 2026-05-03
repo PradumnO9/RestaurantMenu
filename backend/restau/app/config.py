@@ -3,7 +3,7 @@
 # ================================
 
 USERNAME = "postgres"
-PASSWORD = "admin123" 
+PASSWORD = "postgres" 
 POSTGRESQL_SERVER_INSTANCE_DOMAIN = "localhost" 
 POSTGRESQL_SERVER_INSTANCE_PORT = "5432"
 DAT_A_BASE = "indine"

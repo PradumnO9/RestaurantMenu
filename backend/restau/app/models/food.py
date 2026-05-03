@@ -16,7 +16,8 @@ class Food(SQLModel,table=True):
     is_customizable: bool = Field(default = False)
     FoodPricing  : JSON = Field(default = {}, sa_column =Column(JSON))
     FoodImage_FId : Optional[int] = Field(default = None , foreign_key = 'foodimage.FoodImageId')
-    foodimage: Optional["FoodImage"] = Relationship(back_populates = "Foods")
+    foodimage: Optional["FoodImage"] = Relationship(back_populates = "FoodviaImage" )
+
     class Config:
         arbitrary_types_allowed=True 
     

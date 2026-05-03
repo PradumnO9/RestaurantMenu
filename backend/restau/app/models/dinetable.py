@@ -9,5 +9,5 @@ class DineTable(SQLModel, table=True):
     IsWorkingCondition: bool = Field(default=True)
     IsCustomerOccupied : bool = Field(default=False) 
     Dinespace_FId : Optional[int] = Field(default = None, foreign_key= 'dinespace.DinespaceId')
-    dinespace : Optional["Dinespace"] = Relationship(back_populates = 'tables') 
+    dinespace : Optional["Dinespace"] = Relationship(back_populates = 'dinetables') 
 
