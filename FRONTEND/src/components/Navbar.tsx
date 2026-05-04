@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { addUser, removeUser } from "../redux/adminSlice";
 import { useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import axios from "axios";
 
 const Navbar: React.FC = () => {
   const { isLoggedIn, type } = useAppSelector((store) => store.admin);
@@ -23,6 +24,22 @@ const Navbar: React.FC = () => {
       ),
     );
   }, []);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await axios.get(
+  //         "http://localhost:8000/api/admin/menuitemcategory/",
+  //       );
+  //       const jsonData = await data.json();
+  //       console.log(jsonData);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
 
   const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
